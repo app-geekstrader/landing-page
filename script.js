@@ -179,7 +179,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentLang !== selectedLang) {
                 currentLang = selectedLang;
                 updateLanguage(currentLang);
-                
+
+                // Google Analytics: Track language change
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'language_change', {
+                        'event_category': 'engagement',
+                        'event_label': selectedLang,
+                        'value': selectedLang
+                    });
+                }
+
                 // Add a small animation effect
                 document.body.style.opacity = '0.8';
                 setTimeout(() => {
@@ -200,6 +209,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnRequest && modal) {
         btnRequest.addEventListener('click', () => {
             modal.classList.add('show');
+
+            // Google Analytics: Track modal open
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'open_request_modal', {
+                    'event_category': 'engagement',
+                    'event_label': 'Request Access Button',
+                    'language': currentLang
+                });
+            }
         });
     }
 
@@ -265,14 +283,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
+                    // Google Analytics: Track successful form submission (conversion)
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'generate_lead', {
+                            'event_category': 'conversion',
+                            'event_label': 'Access Request Form',
+                            'language': currentLang,
+                            'currency': 'USD',
+                            'value': 1.0
+                        });
+                    }
+
                     alert(currentLang === 'pt' ? 'Solicitação enviada com sucesso! Entraremos em contato.' : currentLang === 'es' ? '¡Solicitud enviada con éxito! Nos pondremos en contacto.' : 'Request successfully submitted! We will contact you.');
                     form.reset();
                     modal.classList.remove('show');
                 } else {
+                    // Google Analytics: Track form submission error
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'form_error', {
+                            'event_category': 'error',
+                            'event_label': 'Form Submission Failed',
+                            'language': currentLang
+                        });
+                    }
+
                     alert('Houve um erro ao enviar. Tente novamente mais tarde.');
                 }
             } catch (error) {
                 console.error('Error submitting form:', error);
+
+                // Google Analytics: Track network error
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'exception', {
+                        'description': 'Form submission network error',
+                        'fatal': false,
+                        'language': currentLang
+                    });
+                }
+
                 alert('Erro na conexão. Tente novamente.');
             } finally {
                 // Restore button
