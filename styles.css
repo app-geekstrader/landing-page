@@ -675,18 +675,29 @@ input.iti__search-input:focus {
 /* Responsive Design */
 @media (max-width: 900px) {
     .hero-body {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column-reverse;
         text-align: center;
+        gap: 40px;
     }
-    
+
     .hero-content {
         align-items: center;
     }
-    
+
+    .hero-visual {
+        width: 100%;
+    }
+
+    .hero-image {
+        width: 80%;
+        max-width: 80%;
+    }
+
     .hero-title {
         font-size: 3rem;
     }
-    
+
     .features {
         grid-template-columns: 1fr;
     }
