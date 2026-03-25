@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         Nome: name,
                         Email: email,
                         Telefone: phone,
-                        _subject: `Novo Pedido de Acesso - GeeksTrader - ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR')}`
+                        _subject: `New Access Request - GeeksTrader - ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR')}`
                     })
                 });
 
